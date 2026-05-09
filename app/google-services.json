@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "439899816290",
+    "project_id": "task23-ya",
+    "storage_bucket": "task23-ya.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439899816290:android:94df4a3f36ec0a2e35ec3b",
+        "android_client_info": {
+          "package_name": "com.example.task23_ya"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDECMZANJMBJSvuk1zaCaXOB0TYFBO8sgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
