@@ -17,6 +17,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * @author darya
+ * @version 1.0
+ * @since 10/05/2026
+ * Activity for searching and filtering expenses
+ */
 public class SearchActivity extends BaseActivity {
 
     EditText etSearchDesc, etMinAmount;
@@ -25,6 +31,12 @@ public class SearchActivity extends BaseActivity {
     ArrayList<String> resultsList;
     ArrayAdapter<String> adapter;
 
+    /**
+     * Called when the activity is starting.
+     * <p>
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +51,12 @@ public class SearchActivity extends BaseActivity {
         lvSearchResults.setAdapter(adapter);
     }
 
+    /**
+     * Searches expenses by description.
+     * <p>
+     *
+     * @param view The view that was clicked.
+     */
     public void searchByDesc(View view) {
         String searchTxt = etSearchDesc.getText().toString();
         if (searchTxt.isEmpty()) return;
@@ -46,6 +64,12 @@ public class SearchActivity extends BaseActivity {
         executeSearchQuery(queryDesc);
     }
 
+    /**
+     * Filters expenses by minimum amount.
+     * <p>
+     *
+     * @param view The view that was clicked.
+     */
     public void filterByAmount(View view) {
         String amountTxt = etMinAmount.getText().toString();
         if (amountTxt.isEmpty()) return;
@@ -55,8 +79,20 @@ public class SearchActivity extends BaseActivity {
         executeSearchQuery(queryAmount);
     }
 
+    /**
+     * Executes the Firebase query and updates the result list.
+     * <p>
+     *
+     * @param query The Firebase query to execute.
+     */
     private void executeSearchQuery(Query query) {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
+            /**
+             * This method will be called with a snapshot of the data at this location.
+             * <p>
+             *
+             * @param dS The current data at the location
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dS) {
                 resultsList.clear();
@@ -77,6 +113,12 @@ public class SearchActivity extends BaseActivity {
                 adapter.notifyDataSetChanged();
             }
 
+            /**
+             * This method will be triggered in the event that this listener either failed at the server, or was removed as a result of the security and Firebase Database rules of the app.
+             * <p>
+             *
+             * @param error A description of the error that occurred
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("FirebaseSearch", "שגיאה בחיפוש: " + error.getMessage());

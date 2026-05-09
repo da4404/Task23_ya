@@ -16,6 +16,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * @author darya
+ * @version 1.0
+ * @since 10/05/2026
+ * Main activity for adding new expenses
+ */
 public class MainActivity extends BaseActivity {
 
     EditText etDescription, etAmount;
@@ -24,8 +30,14 @@ public class MainActivity extends BaseActivity {
     TextView tvSelectedDate;
 
     String selectedDate = "";
-    String[] categories = {"אוכל", "בילוי", "תחבורה", "מגשימים", "קונסרבטוריון", "אחר"};
+    String[] categories = {"אוכל", "בילוי", "תחבורה", "אחר"};
 
+    /**
+     * Called when the activity is starting.
+     * <p>
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +55,12 @@ public class MainActivity extends BaseActivity {
 
         btnDate.setOnClickListener(new View.OnClickListener()
         {
+            /**
+             * Called when the date button is clicked.
+             * <p>
+             *
+             * @param v The view that was clicked.
+             */
             @Override
             public void onClick(View v)
             {
@@ -54,6 +72,15 @@ public class MainActivity extends BaseActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
                         new DatePickerDialog.OnDateSetListener()
                         {
+                            /**
+                             * Called when the date is set in the dialog.
+                             * <p>
+                             *
+                             * @param view The view associated with this listener.
+                             * @param year The year that was set.
+                             * @param month The month that was set (0-11 for compatibility with Calendar).
+                             * @param dayOfMonth The day of the month that was set.
+                             */
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
                             {
@@ -69,6 +96,12 @@ public class MainActivity extends BaseActivity {
 
         btnSave.setOnClickListener(new View.OnClickListener()
         {
+            /**
+             * Called when the save button is clicked.
+             * <p>
+             *
+             * @param v The view that was clicked.
+             */
             @Override
             public void onClick(View v) {
                 String desc = etDescription.getText().toString();
