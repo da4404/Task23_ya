@@ -48,7 +48,15 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:hint="הצג סכומים מעל (₪)..."
+            android:hint="מינימום"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/etMaxAmount"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="מקסימום"
             android:inputType="numberDecimal" />
 
         <Button

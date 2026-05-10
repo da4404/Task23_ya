@@ -185,7 +185,9 @@ public class DisplayActivity extends BaseActivity
                             @Override
                             public void onClick(DialogInterface dialog2, int which2) {
                                 String newAmountStr = input.getText().toString();
-                                if (!newAmountStr.isEmpty()) {
+                                if (newAmountStr.isEmpty() || newAmountStr.equals(".")) {
+                                    Toast.makeText(DisplayActivity.this, "סכום לא חוקי, העדכון בוטל", Toast.LENGTH_SHORT).show();
+                                } else {
                                     double newAmount = Double.parseDouble(newAmountStr);
                                     expense.setAmount(newAmount);
                                     FBref.refExpenses.child(expense.getKeyID()).setValue(expense);

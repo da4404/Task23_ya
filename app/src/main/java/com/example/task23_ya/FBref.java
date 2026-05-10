@@ -10,6 +10,6 @@ import com.google.firebase.database.FirebaseDatabase;
  * Helper class for Firebase references
  */
 public class FBref {
-    public static FirebaseDatabase FBDB = FirebaseDatabase.getInstance();
-    public static DatabaseReference refExpenses = FBDB.getReference(Constants.EXPENSES_NODE);
+    public static final FirebaseDatabase FBDB = FirebaseDatabase.getInstance();
+    public static final DatabaseReference refExpenses = FBDB.getReference(Constants.EXPENSES_NODE);
 }

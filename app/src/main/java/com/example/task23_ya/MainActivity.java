@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity {
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
                             {
                                 calendar.set(year, month, dayOfMonth);
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd", Locale.getDefault());
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                                 selectedDate = sdf.format(calendar.getTime());
                                 tvSelectedDate.setText("תאריך נבחר: " + selectedDate);
                             }
@@ -113,8 +113,11 @@ public class MainActivity extends BaseActivity {
                     return;
                 }
 
+                if (amountStr.isEmpty() || amountStr.equals(".")) {
+                    Toast.makeText(MainActivity.this, "נא להזין סכום חוקי", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 double amount = Double.parseDouble(amountStr);
-
                 String keyID = FBref.refExpenses.push().getKey();
 
                 if (keyID != null) {

@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 public class SearchActivity extends BaseActivity {
 
-    EditText etSearchDesc, etMinAmount;
+    EditText etSearchDesc, etMinAmount, etMaxAmount;
     ListView lvSearchResults;
 
     ArrayList<String> resultsList;
@@ -45,6 +45,7 @@ public class SearchActivity extends BaseActivity {
         etSearchDesc = findViewById(R.id.etSearchDesc);
         etMinAmount = findViewById(R.id.etMinAmount);
         lvSearchResults = findViewById(R.id.lvSearchResults);
+        etMaxAmount = findViewById(R.id.etMaxAmount);
 
         resultsList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, resultsList);
@@ -71,12 +72,46 @@ public class SearchActivity extends BaseActivity {
      * @param view The view that was clicked.
      */
     public void filterByAmount(View view) {
-        String amountTxt = etMinAmount.getText().toString();
-        if (amountTxt.isEmpty()) return;
+        String minTxt = etMinAmount.getText().toString();
+        String maxTxt = etMaxAmount.getText().toString();
 
-        double minAmount = Double.parseDouble(amountTxt);
-        Query queryAmount = FBref.refExpenses.orderByChild("amount").startAt(minAmount);
-        executeSearchQuery(queryAmount);
+        // בדיקה פשוטה לשני השדות ביחד - מוודאים שהם לא ריקים ושאין בהם רק נקודה
+        if (minTxt.isEmpty() || minTxt.equals(".") || maxTxt.isEmpty() || maxTxt.equals(".")) {
+            Toast.makeText(this, "נא להזין טווח מחירים חוקי", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double min = Double.parseDouble(minTxt);
+        double max = Double.parseDouble(maxTxt);
+
+        FBref.refExpenses.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dS) {
+                resultsList.clear();
+
+                for (DataSnapshot data : dS.getChildren()) {
+                    Expense exp = data.getValue(Expense.class);
+                    if (exp != null && exp.getAmount() >= min && exp.getAmount() <= max) {
+                        String itemDisplay = exp.getDate() + " | " + exp.getCategory() + "\n"
+                                + exp.getDescription() + " - ₪" + exp.getAmount();
+                        resultsList.add(itemDisplay);
+                    }
+                }
+
+                if (resultsList.isEmpty()) {
+                    Toast.makeText(SearchActivity.this, "לא נמצאו תוצאות בטווח הזה", Toast.LENGTH_SHORT).show();
+                    etMinAmount.setText("");
+                    etMaxAmount.setText("");
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseSearch", "שגיאה: " + error.getMessage());
+            }
+        });
     }
 
     /**
